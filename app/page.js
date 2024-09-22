@@ -9,10 +9,11 @@ function Week({n}) {
 export default function Page() {
     return (
       <main>
-        <h1>CPRG 306: Web Development 2 - Assignments</h1>
+        <h1 className="text-3xl p-2 m-2 font-bold text-yellow-100 text-center">CPRG 306: Web Development 2 - Assignments</h1>
         <ul>
             <Week n={2} />
             <Week n={3}/>
+            <Week n={4}/>
         </ul>
       </main>
     );
