@@ -37,17 +37,17 @@ export default function ItemList() {
           <h1 className="p-2 m-2 text-xl">Sort shopping list items</h1>
           <p className="m-2">
           <button 
-            className={`p-2 m-2 ${sortBy === "name" ? "bg-green-900" : "bg-red-900"} rounded`}
+            className={`p-2 m-2 ${sortBy === "name" ? "bg-slate-900" : "bg-stone-900 text-stone-500"} rounded`}
             onClick={byName}>
             Sort by Name
           </button>
           <button 
-            className={`p-2 m-2 ${sortBy === "category" ? "bg-green-900" : "bg-red-900"} rounded`}
+            className={`p-2 m-2 ${sortBy === "category" ? "bg-slate-900" : "bg-stone-900 text-stone-500"} rounded`}
             onClick={byCategory}>
             Sort by Category
           </button>
           <button 
-            className={`p-2 m-2 ${sortBy === "grouped" ? "bg-green-900" : "bg-red-900"} rounded`}
+            className={`p-2 m-2 ${sortBy === "grouped" ? "bg-slate-900" : "bg-stone-900 text-stone-500"} rounded`}
             onClick={byGroup}>            
             Sort by Grouped Category
           </button>
