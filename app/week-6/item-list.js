@@ -34,7 +34,6 @@ export default function ItemList() {
  
     return ( 
         <main>
-          <h1 className="p-2 m-2 text-xl">Sort shopping list items</h1>
           <p className="m-2">
           <button 
             className={`p-2 m-2 ${sortBy === "name" ? "bg-slate-900" : "bg-stone-900 text-stone-500"} rounded`}
