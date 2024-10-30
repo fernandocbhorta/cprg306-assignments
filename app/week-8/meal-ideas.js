@@ -8,19 +8,29 @@ async function fetchMealIdeas(ingredient) {
   );
   const data = await response.json();
   console.log(data.meals);
-  return data.meals;   
+  return data.meals; 
+}
+
+async function fetchInstructions(idMeal) {
+  const response = await fetch(
+    `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`
+  );
+  const data = await response.json();
+  console.log(data.meals);
+  return data.meals[0]?.strInstructions; 
 }
 
 export default function MealIdeas({ ingredient }) {
   const [meals, setMeals] = useState([]);
-  const [expandedMealId, setExpandedMealId] = useState(null); 
+  const [expandedMealId, setExpandedMealId] = useState(null);
+  const [instructions, setInstructions] = useState(""); 
 
   async function loadMealIdeas() {
     if (ingredient) {
       const data = await fetchMealIdeas(ingredient);
       setMeals(data);
     } else {
-      setMeals([]); 
+      setMeals([]);
     }
   }
 
@@ -28,8 +38,15 @@ export default function MealIdeas({ ingredient }) {
     loadMealIdeas();
   }, [ingredient]);
 
-  const handleMealClick = (idMeal) => {
-    setExpandedMealId((prevId) => (prevId === idMeal ? null : idMeal));
+  const handleMealClick = async (idMeal) => {
+    setExpandedMealId((prevId) => (prevId === idMeal ? null : idMeal));   
+    
+    if (expandedMealId !== idMeal) {
+      const instructions = await fetchInstructions(idMeal);
+      setInstructions(instructions);
+    } else {
+      setInstructions(""); 
+    }
   };
 
   return (
@@ -37,20 +54,22 @@ export default function MealIdeas({ ingredient }) {
       <h2 className="text-2xl font-bold text-yellow-100">Meal Ideas</h2>
       
       <ul>
-        {meals && meals.length > 0 ? 
-        
-        ( 
+        {meals && meals.length > 0 ? (
           meals.map((meal) => (
             <li 
               key={meal.idMeal} 
               onClick={() => handleMealClick(meal.idMeal)}
-              className={expandedMealId === meal.idMeal ? 'py-4 font-bold bg-slate-900 w-40' : ''}
+              className={expandedMealId === meal.idMeal ? 'py-4 font-bold bg-slate-900 w-96' : ''}
             >
               <p>{meal.strMeal}</p>
               {expandedMealId === meal.idMeal && meal.strMealThumb && (              
-                <img src={meal.strMealThumb} alt={meal.strMeal} />
+                <img className="object-cover w-100" src={meal.strMealThumb} alt={meal.strMeal} />
               )}
-              
+              {expandedMealId === meal.idMeal && instructions && (
+                <div className="p-4 text-xs">
+                  <p>{instructions}</p>
+                </div>
+              )}
             </li>
           ))
         ) : (
