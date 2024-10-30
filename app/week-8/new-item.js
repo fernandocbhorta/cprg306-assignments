@@ -37,7 +37,7 @@ export default function NewItem({onAddItem}) {
 
   return (
     <div className="p-2 m-2 flex max-w-screen-sm w-full ">
-      <form className="p-4"> 
+      <form className="p-4" onSubmit={handleSubmit}> 
         <div className="max-w-screen-sm items-center mb-2">
           <input 
             id="name" 
@@ -51,14 +51,14 @@ export default function NewItem({onAddItem}) {
 
         <div className="max-w-screen-sm items-center mb-2">
           <p className="px-4 text-black space-around bg-white">{quantity}
-          <button
+          <button type="button" 
             disabled={quantity == 1} 
             className="p-3 text-black rounded m-1 hover:bg-blue-400 disabled:bg-slate-300 bg-blue-600"
             onClick={decrement}
           >
             -
           </button>
-          <button
+          <button type="button" 
             disabled={quantity == 20} 
             className="p-3 text-black rounded m-1 hover:bg-blue-400 disabled:bg-slate-300 bg-blue-600"
             onClick={increment}
@@ -80,7 +80,7 @@ export default function NewItem({onAddItem}) {
         </div>
 
         <div className="flex justify-center">
-          <button type="button" onClick={handleSubmit} className="py-2 my-2 max-w-screen-sm hover:bg-blue-400 bg-blue-600 rounded w-full">add to list</button> {/* Changed input to button */}
+          <button type="submit" className="py-2 my-2 max-w-screen-sm hover:bg-blue-400 bg-blue-600 rounded w-full">add to list</button> {/* Changed input to button */}
         </div>
       </form>
     </div>
