@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const weeks = [2,3,4,5,6,7];
+const weeks = [2,3,4,5,6,7,8];
 
 export default function Page() {
     return (
