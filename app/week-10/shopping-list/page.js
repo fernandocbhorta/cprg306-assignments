@@ -2,22 +2,54 @@
 
 import ItemList from "./item-list.js";
 import NewItem from "./new-item.js";
-import itemsData from "./items.json";
+import { getItems, addItem } from "../_services/shopping-list-service.js";
 import MealIdeas from "./meal-ideas.js";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useUserAuth } from "../_utils/auth-context";
 
 export default function Page() {
   const { user, gitHubSignIn, firebaseSignOut } = useUserAuth();
   if (!user) {
-    return <p><Link href="../week-9">You shouldn't be here, click to go back</Link></p>;
+    return <p><Link href="../week-10">You shouldn't be here, click to go back</Link></p>;
   }
-  const [items, setItems] = useState(itemsData);
+  const [items, setItems] = useState([]);
 
-  const handleAddItem = (newItem) => {
-    setItems([...items, newItem]);
+  // Async function to load items
+  const loadItems = async () => {
+      try {
+          // Check if user is logged in
+          if (user && user.uid) {
+              // Call getItems with the userId
+              const userItems = await getItems(user.uid);
+              // Set the state with the result
+              setItems(userItems);
+          }
+      } catch (error) {
+          console.error("Error loading items:", error);
+      }
   };
+
+  // Load items when the component mounts or when the user changes
+  useEffect(() => {
+      loadItems();
+  }, [user]);
+
+  const handleAddItem = async (newItem) => {
+    try {
+        // Call the addItem function with user.uid and the new item
+        const newItemId = await addItem(user.uid, newItem);
+        
+        // Set the id of the new item
+        const updatedItem = { ...newItem, id: newItemId };
+        
+        // Update the state to include the new item
+        setItems([...items, updatedItem]);
+    } catch (error) {
+        console.error("Error adding item:", error);
+    }
+};
+
 
   const [sortBy, setSortBy] = useState("name");
   const [selectedItemName, setSelectedItemName] = useState(null);
