@@ -10,9 +10,7 @@ import { useUserAuth } from "../_utils/auth-context";
 
 export default function Page() {
   const { user, gitHubSignIn, firebaseSignOut } = useUserAuth();
-  if (!user) {
-    return <p><Link href="../week-9">You shouldn't be here, click to go back</Link></p>;
-  }
+  
   const [items, setItems] = useState(itemsData);
 
   const handleAddItem = (newItem) => {
@@ -21,6 +19,10 @@ export default function Page() {
 
   const [sortBy, setSortBy] = useState("name");
   const [selectedItemName, setSelectedItemName] = useState(null);
+
+  if (!user) {
+    return <p><Link href="../week-9">You shouldn't be here, click to go back</Link></p>;
+  }
 
 
   const handleItemSelect = (item) => {
