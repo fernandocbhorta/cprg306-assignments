@@ -20,13 +20,14 @@ export default function NewItem({onAddItem}) {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
     if (name !== "" && category !== "" && quantity > 0) {
         const newItem = { name, quantity, category };
         console.log("Submitting New Item:", newItem); // Debug log
         onAddItem(newItem);
         setName("");
-        setCategory("");
+        setCategory("produce");
         setQuantity(1);
     } else {
         console.log("Form validation failed"); // Debug log for validation failure
