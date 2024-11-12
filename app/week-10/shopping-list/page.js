@@ -28,10 +28,10 @@ export default function Page() {
   useEffect(() => {
     if (user)
     loadItems();
-}, [user]); // Run effect whenever 'user' changes
+}, [user]); 
 
 if (!user) {
-  return <p><Link href="../week-9">You shouldn&apos;t be here, click to go back</Link></p>;
+  return <p><Link href="../week-10">You shouldn&apos;t be here, click to go back</Link></p>;
 }
 
 
