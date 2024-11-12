@@ -1,8 +1,23 @@
 "use client";
 import Item from "./item.js";
+import { useCallback } from "react";
+import { useState } from "react";
 
-export default function ItemList({ items, sortBy, byName, byCategory, byGroup, onItemSelect }) {
+export default function ItemList({ items, setItems, onItemSelect }) {
   let currentCat = "";
+  const [sortBy, setSortBy] = useState("name");  
+
+  const sortItems = useCallback((criteria) => {
+    setSortBy(criteria);
+    const sortedItems = [...items].sort((a, b) => {
+      if (criteria === "name") {
+        return a.name.localeCompare(b.name);
+      }
+      const categoryComparison = a.category.localeCompare(b.category);
+      return categoryComparison !== 0 ? categoryComparison : a.name.localeCompare(b.name);
+    });
+    setItems(sortedItems); 
+  }, [items, setSortBy, setItems]); 
 
   return (
     <main>
@@ -11,7 +26,7 @@ export default function ItemList({ items, sortBy, byName, byCategory, byGroup, o
           className={`p-2 m-2 ${
             sortBy === "name" ? "bg-slate-900" : "bg-stone-900 text-stone-500"
           } rounded`}
-          onClick={byName}
+          onClick={() => sortItems("name")}
         >
           Sort by Name
         </button>
@@ -19,7 +34,7 @@ export default function ItemList({ items, sortBy, byName, byCategory, byGroup, o
           className={`p-2 m-2 ${
             sortBy === "category" ? "bg-slate-900" : "bg-stone-900 text-stone-500"
           } rounded`}
-          onClick={byCategory}
+          onClick={() => sortItems("category")}
         >
           Sort by Category
         </button>
@@ -27,7 +42,7 @@ export default function ItemList({ items, sortBy, byName, byCategory, byGroup, o
           className={`p-2 m-2 ${
             sortBy === "grouped" ? "bg-slate-900" : "bg-stone-900 text-stone-500"
           } rounded`}
-          onClick={byGroup}
+          onClick={() => sortItems("grouped")}
         >
           Sort by Grouped Category
         </button>
@@ -40,8 +55,7 @@ export default function ItemList({ items, sortBy, byName, byCategory, byGroup, o
             </p>
           ) : null}
 
-          <Item {...item} 
-          onSelect={() => onItemSelect(item)}/>
+          <Item {...item} onSelect={() => onItemSelect(item)} />
         </div>
       ))}
     </main>
