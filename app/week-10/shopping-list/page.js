@@ -17,11 +17,6 @@ export default function Page() {
   const [sortBy, setSortBy] = useState("name");
   const [selectedItemName, setSelectedItemName] = useState(null);
 
-  if (!user) {
-    return <p><Link href="../week-9">You shouldn&apos;t be here, click to go back</Link></p>;
-  }
-
-
   const loadItems = async () => {
       console.log("Loading Items...");
       console.log("User ID:", user.uid);
@@ -34,6 +29,10 @@ export default function Page() {
     if (user)
     loadItems();
 }, [user]); // Run effect whenever 'user' changes
+
+if (!user) {
+  return <p><Link href="../week-9">You shouldn&apos;t be here, click to go back</Link></p>;
+}
 
 
   const handleAddItem = async (newItem) => {
