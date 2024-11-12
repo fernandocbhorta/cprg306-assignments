@@ -22,7 +22,8 @@ export default function NewItem({onAddItem}) {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
     const newId = Math.floor(Math.random()* 201300);
     if(name !== "" && category !== "" && quantity > 0) {
       const newItem = {id: newId, name, quantity, category}
