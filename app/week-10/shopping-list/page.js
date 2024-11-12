@@ -26,11 +26,9 @@ export default function Page() {
         console.log("Loaded Items:", fetchedItems);
     };
 
-    useEffect(() => {
-        if (user) {
-            loadItems(); 
-        }
-    }, [user]);
+    useEffect(() => {        
+        loadItems();         
+    }, []);
 
     const handleAddItem = async (newItem) => {
         await addItem(newItem, user.uid);
