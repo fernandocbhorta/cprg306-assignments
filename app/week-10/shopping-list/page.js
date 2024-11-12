@@ -9,33 +9,37 @@ import { useUserAuth } from "../_utils/auth-context";
 import { getItems, addItem } from "../_services/shopping-list-service";
 
 export default function Page() {
-    const { user, firebaseSignOut } = useUserAuth();
-    if (!user) {
-        return <p><Link href="../week-10">You shouldn't be here, click to go back</Link></p>;
-    }
-    
-    const [items, setItems] = useState([]);
-    const [sortBy, setSortBy] = useState("name");
-    const [selectedItemName, setSelectedItemName] = useState(null);
+  const { user, firebaseSignOut } = useUserAuth();
 
-    const loadItems = async () => {
-        console.log("Loading Items...");
-        console.log("User ID:", user.uid);
-        const fetchedItems = await getItems(user.uid);
-        setItems(fetchedItems);
-        console.log("Loaded Items:", fetchedItems);
-    };
 
-    useEffect(() => {        
-        loadItems();         
-    }, []);
+  // Define state variables at the top
+  const [items, setItems] = useState([]);
+  const [sortBy, setSortBy] = useState("name");
+  const [selectedItemName, setSelectedItemName] = useState(null);
 
-    const handleAddItem = async (newItem) => {
-        await addItem(newItem, user.uid);
-        console.log("Added Item:", newItem);
-        console.log("User ID:", user.uid);
-        loadItems();
-    };
+  // If user is not logged in, render a message
+
+
+  const loadItems = async () => {
+      console.log("Loading Items...");
+      console.log("User ID:", user.uid);
+      const fetchedItems = await getItems(user.uid);
+      setItems(fetchedItems);
+      console.log("Loaded Items:", fetchedItems);
+  };
+
+  useEffect(() => {
+    if (user)
+    loadItems();
+}, [user]); // Run effect whenever 'user' changes
+
+
+  const handleAddItem = async (newItem) => {
+      await addItem(newItem, user.uid);
+      console.log("Added Item:", newItem);
+      console.log("User ID:", user.uid);
+      loadItems(); // Reload items after adding a new one
+  };
 
   const handleItemSelect = (item) => {
     console.log("Selected Item:", item); 
@@ -102,6 +106,7 @@ export default function Page() {
       })
     );
   };
+  
 
   return (
     <main>

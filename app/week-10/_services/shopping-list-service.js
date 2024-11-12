@@ -23,6 +23,7 @@ export async function addItem(item, userid) {
         const docRef = await addDoc(collection(db, "users", userid, "items"), item);
         console.log("Document written with ID: ", docRef.id);
     } catch (error) {
-        console.error("Error adding document: ", error); 
+        console.error("Error adding document: ", error.message);
+        console.error("Error details: ", error);
     }
 }
