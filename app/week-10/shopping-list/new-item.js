@@ -8,8 +8,6 @@ export default function NewItem({onAddItem}) {
   const [quantity, setQuantity] = useState(1);
   const categories = ["Produce", "Dairy", "Bakery", "Meat", "Frozen Foods", "Canned Goods", "Dry Goods", "Beverages", "Snacks", "Household", "Other"];
 
-
-
   const increment = () => {
     if (quantity < 20) {
       setQuantity(quantity + 1);

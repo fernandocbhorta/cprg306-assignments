@@ -21,7 +21,7 @@ export default function Page() {
   const [selectedItemName, setSelectedItemName] = useState(null);
 
   if (!user) {
-    return <p><Link href="../week-9">You shouldn't be here, click to go back</Link></p>;
+    return <p><Link href="../week-9">You shouldn&apos;t be here, click to go back</Link></p>;
   }
 
 

@@ -17,7 +17,9 @@ export default function Page() {
   const [sortBy, setSortBy] = useState("name");
   const [selectedItemName, setSelectedItemName] = useState(null);
 
-  // If user is not logged in, render a message
+  if (!user) {
+    return <p><Link href="../week-9">You shouldn&apos;t be here, click to go back</Link></p>;
+  }
 
 
   const loadItems = async () => {
